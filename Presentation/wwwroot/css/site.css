@@ -1,0 +1,148 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+th {
+    background-color: #003e80 !important;
+    color: #e6f2ff;
+    font-size: 16px;
+}
+
+/* Upload styles */
+.upload-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+    .upload-container label {
+        font-weight: bold;
+    }
+
+    .upload-container input {
+        min-width: 150px;
+    }
+
+/* Filter styles */
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+    .filter-container label {
+        font-weight: bold;
+    }
+
+    .filter-container input {
+        min-width: 150px;
+    }
+
+
+.d-flex.align-items-center.flex-wrap > * {
+    margin-bottom: 0.5rem;
+}
+
+/* Summary styles */
+.summary-container {
+    background-color: #f8f9fa;
+    border: 2px solid #007bff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+    .summary-container p {
+        font-size: 1.1em;
+        margin: 0.5em 0;
+    }
+
+        .summary-container p strong {
+            font-weight: bold;
+        }
+
+    .summary-container .text-success {
+        color: #28a745;
+    }
+
+    .summary-container .text-danger {
+        color: #dc3545;
+    }
+
+    .summary-container .text-warning {
+        color: #ffc107;
+    }
+
+    .summary-container .text-primary {
+        color: #007bff;
+    }
+
+.highlight {
+    background-color: yellow;
+}
+
+.large-modal {
+    max-width: 80% !important;
+    width: 80% !important;
+}
+
+/* Center all headers */
+h2, h5 {
+    text-align: center;
+}
+
+/* Card styles */
+.card {
+    margin-bottom: 20px;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.rounded-card {
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* Pagination styles */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .pagination-container .btn-group .btn {
+        margin: 0 5px;
+    }
+
+.reduced-padding {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+

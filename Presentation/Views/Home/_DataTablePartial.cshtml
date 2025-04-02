@@ -1,0 +1,29 @@
+@model List<Domain.Entities.DataRecord>
+
+<table class="table table-striped table-bordered" id="dataTable">
+    <thead class="thead-dark">
+        <tr>
+            <th>Date</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr>
+                <td>@record.OriginalTime</td>
+                <td>@record.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="pagination-container text-center mt-3">
+    <div class="btn-group" role="group" aria-label="Pagination">
+        <button class="btn btn-primary" onclick="changePage(1)" @(ViewBag.CurrentPage == 1 ? "disabled" : "")>&laquo; First</button>
+        <button class="btn btn-primary" onclick="changePage(@(ViewBag.CurrentPage - 1))" @(ViewBag.CurrentPage == 1 ? "disabled" : "")>Previous</button>
+        <span class="mx-2 align-self-center">Page @ViewBag.CurrentPage of @ViewBag.TotalPages</span>
+        <button class="btn btn-primary" onclick="changePage(@(ViewBag.CurrentPage + 1))" @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")>Next</button>
+        <button class="btn btn-primary" onclick="changePage(@ViewBag.TotalPages)" @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")>Last &raquo;</button>
+    </div>
+</div>

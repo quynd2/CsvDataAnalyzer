@@ -1,0 +1,96 @@
+﻿@model List<Domain.Entities.DataRecord>
+@{
+    ViewData["Title"] = "CSV Data Viewer";
+}
+
+<h2 class="text-center my-4">CSV Data Analysis</h2>
+
+<div class="container mt-2 reduced-padding">
+    <div class="card rounded-card">
+        <div class="card-body">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="row align-items-end">
+                    <div class="col-md-8">
+                        <label for="csvFile" class="form-label">Upload CSV File</label>
+                        <input class="form-control" type="file" id="csvFile" name="csvFile" accept=".csv" required>
+                    </div>
+                    <div class="col-md-4 text-start">
+                        <button type="button" class="btn btn-primary" id="uploadBtn" onclick="uploadFile()">Upload</button>
+                    </div>
+                </div>
+            </form>
+            <div id="uploadError" class="text-danger mt-2" style="display:none;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-2 reduced-padding">
+    <div class="card rounded-card">
+        <div class="card-body">
+            <div class="row align-items-end">
+                <div class="col-md-4">
+                    <label for="fromDate">From Date:</label>
+                    <input type="datetime-local" id="fromDate" class="form-control" value="@ViewBag.FromDate">
+                </div>
+                <div class="col-md-4">
+                    <label for="toDate">To Date:</label>
+                    <input type="datetime-local" id="toDate" class="form-control" value="@ViewBag.ToDate">
+                </div>
+                <div class="col-md-4 text-start">
+                    <button class="btn btn-primary" id="filterButton">Filter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card rounded-card">
+                <div class="card-body">
+                    <div id="tableContent">
+                        @await Html.PartialAsync("_DataTablePartial", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary btn-lg btn-block mb-3" id="showChartButton" onclick="showChart()">Show Chart</button>
+            <div class="summary-container mb-3 p-3 border rounded">
+                <p><strong>Minimum:</strong> <span class="text-success">@ViewBag.Minimum</span></p>
+                <p><strong>Maximum:</strong> <span class="text-danger">@ViewBag.Maximum</span></p>
+                <p><strong>Average:</strong> <span class="text-warning">@ViewBag.Average</span></p>
+                <br />
+                <p><strong>Most Expensive Hour:</strong> </p>
+                <p><span class="text-primary highlight">@ViewBag.MostExpensiveWindow</span> </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg large-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chartModalLabel">Data Chart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="chart-container">
+                    <canvas id="dataChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            initializeDataTable();
+        });
+    </script>
+}
