@@ -106,6 +106,7 @@ function uploadFile() {
 
     if (!fileInput) {
         $("#uploadError").text('Please select a file').show();
+        loader.style.display = 'none';
         return;
     }
     formData.append("csvFile", fileInput);

@@ -9,16 +9,19 @@ using System.Reflection;
 using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
+using Microsoft.Extensions.Logging;
 
 public class CsvDataServiceTests
 {
     private readonly CsvDataService _csvDataService;
     private readonly Mock<ICsvDataService> _csvDataServiceMock;
+    private readonly Mock<ILogger<CsvDataService>> _logger;
 
     public CsvDataServiceTests()
     {
         _csvDataServiceMock = new Mock<ICsvDataService>();
-        _csvDataService = new CsvDataService();
+        _logger = new Mock<ILogger<CsvDataService>>();
+        _csvDataService = new CsvDataService(_logger.Object);
     }
 
     [Fact]

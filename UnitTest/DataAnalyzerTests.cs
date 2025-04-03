@@ -5,14 +5,17 @@ using System;
 using System.Collections.Generic;
 using Application.Interfaces;
 using Moq;
+using Microsoft.Extensions.Logging;
 
 public class DataAnalyzerTests
 {
     private readonly DataAnalyzer _dataAnalyzer;
+    private readonly Mock<ILogger<DataAnalyzer>> _logger;
 
     public DataAnalyzerTests()
     {
-        _dataAnalyzer = new DataAnalyzer();
+        _logger = new Mock<ILogger<DataAnalyzer>>();
+        _dataAnalyzer = new DataAnalyzer(_logger.Object);
     }
 
     [Fact]

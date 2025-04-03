@@ -20,14 +20,14 @@ namespace Presentation.Controllers
         {
             var originalData = _csvDataService.GetCachedData();
             if (originalData == null || originalData.Count == 0)
-            {
                 return View(new List<DataRecord>());
-            }
 
             var from = fromDate ?? DateTime.MinValue;
             var to = toDate ?? DateTime.MaxValue;
             var data = originalData.Where(x => x.Time >= from && x.Time <= to).ToList();
             var pagedData = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            if (pagedData == null || pagedData.Count == 0)
+                return View(new List<DataRecord>());
 
             ViewBag.FromDate = fromDate?.ToString(Constant.DATE_TIME_FORMAT_DISPLAY) ?? data.Min(x => x.Time).ToString(Constant.DATE_TIME_FORMAT_DISPLAY);
             ViewBag.ToDate = toDate?.ToString(Constant.DATE_TIME_FORMAT_DISPLAY) ?? data.Max(x => x.Time).ToString(Constant.DATE_TIME_FORMAT_DISPLAY);
@@ -46,9 +46,13 @@ namespace Presentation.Controllers
         public IActionResult GetChartData(DateTime? fromDate, DateTime? toDate)
         {
             var originalData = _csvDataService.GetCachedData();
+            if (originalData == null || originalData.Count == 0)
+                return Json(null);
             var from = fromDate ?? DateTime.MinValue;
             var to = toDate ?? DateTime.MaxValue;
             var data = originalData.Where(x => x.Time >= from && x.Time <= to).ToList();
+            if (originalData == null || originalData.Count == 0)
+                return Json(null);
             var labels = data.Select(d => d.Time.ToString(Constant.DATE_TIME_FORMAT_DISPLAY)).ToList();
             var values = data.Select(d => d.Value).ToList();
             var minimum = originalData.Min(x => x.Value);
