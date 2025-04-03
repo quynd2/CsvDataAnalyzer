@@ -7,6 +7,6 @@ namespace Application.Interfaces
         double GetMinimum(List<DataRecord> data);
         double GetMaximum(List<DataRecord> data);
         double GetAverage(List<DataRecord> data);
-        (DateTime, double) GetMostExpensiveHourWindow(List<DataRecord> data);
+        (DateTime startTime, DateTime endTime, double value) GetMostExpensiveWindow(List<DataRecord> data);
     }
 }

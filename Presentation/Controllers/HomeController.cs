@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 using Domain.Entities;
 using Application.Interfaces;
+using Domain.Constants;
 
 namespace Presentation.Controllers
 {
@@ -20,17 +19,23 @@ namespace Presentation.Controllers
         public IActionResult Index(DateTime? fromDate, DateTime? toDate, int page = 1, int pageSize = 10)
         {
             var originalData = _csvDataService.GetCachedData();
+            if (originalData == null || originalData.Count == 0)
+            {
+                return View(new List<DataRecord>());
+            }
+
             var from = fromDate ?? DateTime.MinValue;
             var to = toDate ?? DateTime.MaxValue;
             var data = originalData.Where(x => x.Time >= from && x.Time <= to).ToList();
             var pagedData = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
-            ViewBag.FromDate = fromDate?.ToString("yyyy-MM-ddThh:mm") ?? data.Min(x => x.Time).ToString("yyyy-MM-ddThh:mm");
-            ViewBag.ToDate = toDate?.ToString("yyyy-MM-ddThh:mm") ?? data.Max(x => x.Time).ToString("yyyy-MM-ddThh:mm");
-            ViewBag.Minimum = _dataAnalyzer.GetMinimum(originalData).ToString("F2");
-            ViewBag.Maximum = _dataAnalyzer.GetMaximum(originalData).ToString("F2");
-            ViewBag.Average = _dataAnalyzer.GetAverage(originalData).ToString("F2");
-            ViewBag.MostExpensiveWindow = _dataAnalyzer.GetMostExpensiveHourWindow(originalData);
+            ViewBag.FromDate = fromDate?.ToString(Constant.DATE_TIME_FORMAT_DISPLAY) ?? data.Min(x => x.Time).ToString(Constant.DATE_TIME_FORMAT_DISPLAY);
+            ViewBag.ToDate = toDate?.ToString(Constant.DATE_TIME_FORMAT_DISPLAY) ?? data.Max(x => x.Time).ToString(Constant.DATE_TIME_FORMAT_DISPLAY);
+            ViewBag.Minimum = _dataAnalyzer.GetMinimum(data).ToString("F2");
+            ViewBag.Maximum = _dataAnalyzer.GetMaximum(data).ToString("F2");
+            ViewBag.Average = _dataAnalyzer.GetAverage(data).ToString("F2");
+            var expensiveWindow = _dataAnalyzer.GetMostExpensiveWindow(data);
+            ViewBag.MostExpensiveWindow = string.Format("{0} - {1} : {2}", expensiveWindow.startTime, expensiveWindow.endTime, expensiveWindow.value.ToString("F2"));
             ViewBag.TotalPages = (int)Math.Ceiling((double)data.Count / pageSize);
             ViewBag.CurrentPage = page;
 
@@ -44,7 +49,7 @@ namespace Presentation.Controllers
             var from = fromDate ?? DateTime.MinValue;
             var to = toDate ?? DateTime.MaxValue;
             var data = originalData.Where(x => x.Time >= from && x.Time <= to).ToList();
-            var labels = data.Select(d => d.Time.ToString("yyyy-MM-dd HH:mm")).ToList();
+            var labels = data.Select(d => d.Time.ToString(Constant.DATE_TIME_FORMAT_DISPLAY)).ToList();
             var values = data.Select(d => d.Value).ToList();
             var minimum = originalData.Min(x => x.Value);
             var maximum = originalData.Max(x => x.Value);

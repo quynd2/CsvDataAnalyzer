@@ -1,5 +1,7 @@
 html {
     font-size: 14px;
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
 @media (min-width: 768px) {
@@ -19,12 +21,19 @@ html {
 
 body {
     margin-bottom: 60px;
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
 th {
-    background-color: #003e80 !important;
-    color: #e6f2ff;
+    background-color: #808000 !important;
+    color: #e0e0e0;
     font-size: 16px;
+}
+
+td {
+    background-color: #3c3c3c;
+    color: #e0e0e0;
 }
 
 /* Upload styles */
@@ -66,8 +75,8 @@ th {
 
 /* Summary styles */
 .summary-container {
-    background-color: #f8f9fa;
-    border: 2px solid #007bff;
+    background-color: #3c3c3c;
+    border: 2px solid #444444;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -115,19 +124,39 @@ h2, h5 {
 /* Card styles */
 .card {
     margin-bottom: 20px;
+    background-color: #3c3c3c;
+    color: #e0e0e0;
+    border: 1px solid #444444;
 }
 
 .card-body {
     padding: 10px;
 }
 
+/* Rounded card corners */
 .rounded-card {
     border-radius: 15px;
-    padding: 10px;
 }
 
+/* Reduced padding for upload and filter containers */
+.reduced-padding {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Full-width button */
 .btn-block {
     width: 100%;
+}
+
+/* Tab content styling */
+.tab-content {
+    border: 1px solid #444444;
+    border-top: none;
+    padding: 15px;
+    border-radius: 0 0 15px 15px;
+    background-color: #3c3c3c;
+    color: #e0e0e0;
 }
 
 /* Pagination styles */
@@ -141,8 +170,27 @@ h2, h5 {
         margin: 0 5px;
     }
 
-.reduced-padding {
-    padding-top: 2px;
-    padding-bottom: 2px;
+.nav-tabs .nav-link {
+    color: #e0e0e0;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #333333;
+    color: #e0e0e0;
+}
+
+/* Chart styles */
+.chart-container {
+    background-color: #767676;
+    border: 1px solid #444444;
+    border-radius: 15px;
+    padding: 20px;
+    color: #e0e0e0;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3rem;
 }
 

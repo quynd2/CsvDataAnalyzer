@@ -10,7 +10,7 @@ function initializeDataTable() {
     $('#dataTable').DataTable({
         "bInfo": false,
         "paging": false,
-        "searching": false,
+        "searching": true,
         "ordering": true
     });
 }
@@ -30,7 +30,6 @@ function showChart() {
         type: 'GET',
         data: { fromDate: fromDate, toDate: toDate },
         success: function (data) {
-            $('#chartModal').modal('show');
             var ctx = document.getElementById('dataChart').getContext('2d');
             var chartData = {
                 labels: data.labels,
@@ -63,7 +62,31 @@ function showChart() {
             if (chartInstance) {
                 chartInstance.destroy();
             }
-            chartInstance = new Chart(ctx, { type: 'line', data: chartData });
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#e0e0e0'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#e0e0e0'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e0e0e0'
+                            }
+                        }
+                    }
+                }
+            });
         }
     });
 }
@@ -78,6 +101,8 @@ $('#chartModal').on('hidden.bs.modal', function () {
 function uploadFile() {
     var formData = new FormData();
     var fileInput = $("#csvFile")[0].files[0];
+    var loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
     if (!fileInput) {
         $("#uploadError").text('Please select a file').show();
@@ -92,13 +117,16 @@ function uploadFile() {
         processData: false,
         contentType: false,
         success: function (response) {
+            loader.style.display = 'none';
             if (response.success) {
+                alert('File uploaded successfully.');
                 location.reload();
             } else {
                 $('#uploadError').text(response.message).show();
             }
         },
         error: function (xhr, status, error) {
+            loader.style.display = 'none';
             alert('Error uploading file: ' + error);
         }
     });

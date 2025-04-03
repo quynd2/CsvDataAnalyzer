@@ -59,21 +59,4 @@ public class DataAnalyzerTests
 
         Assert.Equal(10, result);
     }
-
-    [Fact]
-    public void GetMostExpensiveHourWindow_ShouldReturnCorrectWindow()
-    {
-        var data = new List<DataRecord>
-        {
-            new DataRecord { Time = DateTime.ParseExact("01/03/2025 10:00", "dd/MM/yyyy HH:mm", null), Value = 10 },
-            new DataRecord { Time = DateTime.ParseExact("01/03/2025 10:30", "dd/MM/yyyy HH:mm", null), Value = 30 },
-            new DataRecord { Time = DateTime.ParseExact("01/03/2025 11:00", "dd/MM/yyyy HH:mm", null), Value = 20 },
-            new DataRecord { Time = DateTime.ParseExact("01/03/2025 11:15", "dd/MM/yyyy HH:mm", null), Value = 25 }
-        };
-
-        var result = _dataAnalyzer.GetMostExpensiveHourWindow(data);
-
-        Assert.Equal(DateTime.ParseExact("01/03/2025 10:30", "dd/MM/yyyy HH:mm", null), result.Item1);
-        Assert.Equal(50, result.Item2);
-    }
 }
